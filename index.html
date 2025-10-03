@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Control de Gastos Familiar</title>
+    <meta name="theme-color" content="#ffa99f" />
+    <!-- Usar icono vectorial SVG para asegurar visibilidad en todos los entornos -->
+    <link rel="apple-touch-icon" href="icon.svg" />
+    <meta name="msapplication-TileImage" content="icon.svg" />
+    <link rel="icon" href="icon.svg" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Gastos Familia" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1>
+        <a
+          href="icon.svg"
+          target="_blank"
+          rel="noopener noreferrer"
+          title="Abrir icono"
+        >
+          <span class="app-logo" aria-hidden="true">
+            <!-- SVG inyectado via <img> para compatibilidad con app-logo CSS -->
+            <img src="icon.svg" alt="Casa" />
+          </span>
+        </a>
+        <span
+          ><i class="fa-solid fa-wallet"></i> Control de Gastos Familiar</span
+        >
+      </h1>
+      <div id="login-section">
+        <h2>Iniciar sesión</h2>
+        <form id="login-form">
+          <input
+            type="text"
+            id="username"
+            placeholder="Usuario o email"
+            required
+          /><input
+            type="password"
+            id="password"
+            placeholder="Contraseña"
+            required
+          /><button type="submit">Entrar</button>
+        </form>
+        <div id="login-error" class="error"></div>
+        <div class="registro-link">
+          <span>¿No tienes cuenta?</span
+          ><button id="show-registro-btn" type="button">Registrarse</button>
+        </div>
+      </div>
+      <div id="registro-section" style="display: none">
+        <h2>Registro de usuario</h2>
+        <form id="registro-form">
+          <input
+            type="text"
+            id="new-username"
+            placeholder="Nombre de usuario (visible)"
+            required
+          /><input
+            type="email"
+            id="new-email"
+            placeholder="Email (para acceso en la nube)"
+            required
+          /><input
+            type="password"
+            id="new-password"
+            placeholder="Contraseña"
+            required
+          /><button type="submit">Registrar</button>
+        </form>
+        <div id="registro-error" class="error"></div>
+        <button id="back-login-btn" type="button">Volver al login</button>
+      </div>
+      <div id="app-section" style="display: none">
+        <nav class="main-nav">
+          <button class="nav-btn" data-section="inicio">
+            <i class="fa-solid fa-house"></i> Inicio</button
+          ><button class="nav-btn" data-section="gastos">
+            <i class="fa-solid fa-money-bill-wave"></i> Gastos</button
+          ><button class="nav-btn" data-section="reportes">
+            <i class="fa-solid fa-chart-pie"></i> Reportes</button
+          ><button class="nav-btn" data-section="usuarios">
+            <i class="fa-solid fa-users"></i> Usuarios</button
+          ><button
+            id="toggle-dark-btn"
+            aria-label="Alternar modo claro/oscuro"
+            class="nav-btn"
+          >
+            <i class="fa-solid fa-moon"></i></button
+          ><span id="user-greeting"></span
+          ><button id="logout-btn">
+            <i class="fa-solid fa-right-from-bracket"></i> Salir
+          </button>
+        </nav>
+        <section id="inicio-section" class="app-page">
+          <h2>Bienvenido</h2>
+          <p>
+            Gestiona los gastos familiares de forma profesional y visualiza
+            reportes.
+          </p>
+        </section>
+        <section id="gastos-section" class="app-page" style="display: none">
+          <h2><i class="fa-solid fa-money-bill-wave"></i> Gastos</h2>
+          <form id="gasto-form">
+            <input
+              type="text"
+              id="desc-gasto"
+              placeholder="Descripción"
+              required
+            /><input
+              type="number"
+              id="monto-gasto"
+              placeholder="Monto"
+              required
+            /><select id="categoria-gasto" required>
+              <option value="">Categoría</option>
+              <option value="Alimentación">🍔 Alimentación</option>
+              <option value="Transporte">🚗 Transporte</option>
+              <option value="Salud">🩺 Salud</option>
+              <option value="Educación">📚 Educación</option>
+              <option value="Hogar">🏠 Hogar</option>
+              <option value="Servicios">💡 Servicios (agua, luz)</option>
+              <option value="Comunicación">📱 Comunicación</option>
+              <option value="Ropa">👗 Ropa</option>
+              <option value="Mascotas">🐶 Mascotas</option>
+              <option value="Viajes">✈️ Viajes</option>
+              <option value="Regalos">🎁 Regalos</option>
+              <option value="Impuestos">🧾 Impuestos</option>
+              <option value="Ahorro">💰 Ahorro</option>
+              <option value="Trabajo">💼 Trabajo</option>
+              <option value="Otros">🛒 Otros</option></select
+            ><select id="tipo-gasto" required>
+              <option value="Variable">Variable</option>
+              <option value="Fijo">Fijo</option></select
+            ><button type="submit">Agregar</button>
+          </form>
+          <ul id="gastos-list"></ul>
+        </section>
+        <section id="reportes-section" class="app-page" style="display: none">
+          <h2><i class="fa-solid fa-chart-pie"></i> Reportes</h2>
+          <canvas id="grafico-gastos" height="140"></canvas>
+          <canvas
+            id="grafico-mensual"
+            height="140"
+            style="margin-top: 12px"
+          ></canvas>
+          <canvas
+            id="grafico-trend"
+            height="120"
+            style="margin-top: 12px"
+          ></canvas>
+          <div id="reporte-total"></div>
+          <div
+            id="reporte-conjunto-note"
+            style="font-size: 0.9em; color: #555; margin-top: 8px"
+          >
+            Reporte combinado: mostrará datos de todos los usuarios (local o
+            nube).
+          </div>
+        </section>
+        <section id="usuarios-section" class="app-page" style="display: none">
+          <h2><i class="fa-solid fa-users"></i> Usuarios</h2>
+          <ul id="usuarios-list"></ul>
+          <div
+            id="usuarios-note"
+            style="font-size: 0.9em; color: #555; margin-top: 8px"
+          >
+            Puedes eliminar usuarios locales o tu cuenta en la nube.
+          </div>
+        </section>
+      </div>
+    </div>
+    <!-- Firebase (opcional): crea un archivo firebase-config.js que exporte firebaseConfig -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "Control de Gastos Familiar",
+  "short_name": "Gastos Familia",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffa99f",
+  "theme_color": "#ffa99f",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
